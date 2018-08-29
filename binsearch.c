@@ -50,10 +50,10 @@ int partition(int arr[], int lo, int hi){
       arr[j] = aux;
       i++;
     }
-  aux = arr[i];
-  arr[i] = arr[hi];
-  arr[j] = aux;
-}
+    aux = arr[i];
+    arr[i] = arr[hi];
+    arr[j] = aux;
+  }
   return i;
 }
 
@@ -70,9 +70,23 @@ int main(int argc, char** argv) {
            sysconf(_SC_NPROCESSORS_ONLN));
 
     /* TODO: parse arguments with getopt */
-    int E =
+    if (argc == -1){
+      fprintf("Error de argumentos" );
+      exit(EXIT_FAILURE);
+    }
+    else{
+      //E will be the second element and T the third and P the fourth
+      int E = atoi(argv[1]);
+      int T = atoi(argv[2]);
+      int P = atoi(argv[3]);
+      if ((E <= 1) or ((T <= 3)or(T >= 9)) or ((P <= 0)or(P >= pow (T, 10) - 1)){
+        fprintf("Error de argumentos")
+        exit(EXIT_FAILURE);
+      }
+    }
 
     /* TODO: start datagen here as a child process. */
+
 
     /* TODO: implement code for your experiments using data provided by datagen and your
      * serial and parallel versions of binsearch.
