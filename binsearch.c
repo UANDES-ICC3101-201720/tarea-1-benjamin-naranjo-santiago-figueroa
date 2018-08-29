@@ -49,11 +49,11 @@ int partition(int arr[], int lo, int hi){
       arr[i] = arr[j];
       arr[j] = aux;
       i++;
+    }
   aux = arr[i];
   arr[i] = arr[hi];
   arr[j] = aux;
-    }
-  }
+}
   return i;
 }
 
@@ -70,6 +70,7 @@ int main(int argc, char** argv) {
            sysconf(_SC_NPROCESSORS_ONLN));
 
     /* TODO: parse arguments with getopt */
+    int E =
 
     /* TODO: start datagen here as a child process. */
 
