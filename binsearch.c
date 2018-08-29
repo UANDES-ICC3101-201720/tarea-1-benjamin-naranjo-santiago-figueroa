@@ -30,6 +30,24 @@ int serial_binsearch(int x, int val[], int n) {
 
 // TODO: implement
 int parallel_binsearch() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
     return 0;
 }
 
