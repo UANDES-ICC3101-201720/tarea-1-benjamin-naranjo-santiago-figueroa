@@ -11,7 +11,6 @@
 #include "const.h"
 #include "util.h"
 
-// Doing... Santiago
 int serial_binsearch(int x, int val[], int n) {
     int low = 0, high = n-1, mid;
 
@@ -47,7 +46,7 @@ int parallel_binsearch() {
 
 
 
-  
+
     return 0;
 }
 
