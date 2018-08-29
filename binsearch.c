@@ -43,7 +43,7 @@ int partition(int arr[], int lo, int hi){
   int pivot = arr[hi];
   int i = lo;
   int aux;
-  for(int j=lo, j<hi, j++){
+  for(int j=lo; j < hi; j++){
     if arr[j] < pivot{
       aux = arr[i];
       arr[i] = arr[j];
