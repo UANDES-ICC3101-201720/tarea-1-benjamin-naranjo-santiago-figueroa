@@ -44,14 +44,14 @@ int partition(int arr[], int lo, int hi){
   int i = lo;
   int aux;
   for(int j=lo, j<hi, j++){
-    if A[j] < pivot{
-      aux = A[i];
-      A[i] = A[j];
-      A[j] = aux;
+    if arr[j] < pivot{
+      aux = arr[i];
+      arr[i] = arr[j];
+      arr[j] = aux;
       i++;
-  aux = A[i];
-  A[i] = A[hi];
-  A[j] = aux;
+  aux = arr[i];
+  arr[i] = arr[hi];
+  arr[j] = aux;
     }
   }
   return i;
