@@ -62,9 +62,6 @@ int main(int argc, char** argv) {
     /* Probe time elapsed. */
     clock_t cend = clock();
 
-    /* Probe time elapsed. */
-    clock_t cend = clock();
-
     // Time elapsed in miliseconds.
     double time_elapsed = ((double) (cend - cbegin) / CLOCKS_PER_SEC) * 1000;
 
