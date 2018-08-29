@@ -32,11 +32,13 @@ int parallel_binsearch() {
 
     return 0;
 }
-int[] quicksort(int[] arr,int lo, int hi){
+void quicksort(int[] arr,int lo, int hi){
   if (lo < hi){
     p = partition(arr, lo, hi);
     quicksort(arr, lo, p-1);
     quicksort(arr, p+1, hi);
+
+  return
   }
 }
 int partition(int[] arr, int lo, int hi){
