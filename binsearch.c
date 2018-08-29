@@ -11,8 +11,8 @@
 #include "const.h"
 #include "util.h"
 
-// TODO: implement
-int serial_binsearch() {
+// Doing... Santiago
+int serial_binsearch(int low, int high, int list[]) {
     return 0;
 }
 
