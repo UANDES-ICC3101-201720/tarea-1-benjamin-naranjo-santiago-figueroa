@@ -68,4 +68,5 @@ int main(int argc, char** argv) {
     printf("Time elapsed '%lf' [ms].\n", time_elapsed);
 
     exit(0);
+    //Hola hola
 }
