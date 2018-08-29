@@ -12,8 +12,20 @@
 #include "util.h"
 
 // Doing... Santiago
-int serial_binsearch(int low, int high, int list[]) {
-    return 0;
+int serial_binsearch(int x, int val[], int n) {
+    int low = 0, high = n-1, mid;
+
+    while (low < high){
+        mid = (low+high)/2;
+
+        if (x < val[mid])
+            high = mid - 1;
+        else if (x > val[mid])
+            low = mid + 1;
+        else
+            return mid;
+    }
+    return -1;
 }
 
 // TODO: implement
