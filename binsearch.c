@@ -30,25 +30,33 @@ int serial_binsearch(int x, int val[], int n) {
 // TODO: implement
 int parallel_binsearch() {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     return 0;
 }
+int[] quicksort(int[] arr,int lo, int hi){
+  if (lo < hi){
+    p = partition(arr, lo, hi);
+    quicksort(arr, lo, p-1);
+    quicksort(arr, p+1, hi);
+  }
+}
+int partition(int[] arr, int lo, int hi){
+  int pivot = arr[hi];
+  int i = lo;
+  int aux;
+  for(j=lo, j<hi, j++){
+    if A[j] < pivot{
+      aux = A[i];
+      A[i] = A[j];
+      A[j] = aux;
+      i++;
+  aux = A[i];
+  A[i] = A[hi];
+  A[j] = aux;
+    }
+  }
+  return i;
+}
+
 
 int main(int argc, char** argv) {
     /* TODO: move this time measurement to right before the execution of each binsearch algorithms
