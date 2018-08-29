@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
     /* TODO: move this time measurement to right before the execution of each binsearch algorithms
      * in your experiment code. It now stands here just for demonstrating time measurement. */
     clock_t cbegin = clock();
-
+//Hola hola
     printf("[binsearch] Starting up...\n");
 
     /* Get the number of CPU cores available */
