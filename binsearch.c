@@ -11,6 +11,8 @@
 #include "const.h"
 #include "util.h"
 
+int partition(int arr[], int lo, int hi);
+
 int serial_binsearch(int x, int val[], int n) {
     int low = 0, high = n-1, mid;
 
@@ -70,8 +72,21 @@ int main(int argc, char** argv) {
            sysconf(_SC_NPROCESSORS_ONLN));
 
     /* TODO: parse arguments with getopt */
-    int E =
-
+    char *Pflg, *Eflg, *Tflg;
+    int c;
+    while ((c = getopt (argc, argv, "T:E:P:")) != -1)
+      switch (c){
+        case 'E':
+          Eflg = optarg;
+          break;
+        case 'P':
+          Pflg = optarg;
+          break;
+        case 'T':
+          Tflg = optarg;
+          break;
+      }
+    printf("E flag: %s T flag: %s and P flag: %s\n", Eflg, Tflg, Pflg);
     /* TODO: start datagen here as a child process. */
 
     /* TODO: implement code for your experiments using data provided by datagen and your

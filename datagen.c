@@ -36,6 +36,7 @@ UINT* generate_values(UINT T, bool sorted) {
     while (numvalues < size) {
         size_t bread = fread(valuebuff+numvalues, sizeof(UINT), min(remaining_values, 1000), rand);
         numvalues += bread;
+        printf("Bread: %ld\n",bread);// aaaaaaa
         remaining_values -= bread;
     }
 
@@ -51,7 +52,7 @@ UINT* generate_values(UINT T, bool sorted) {
 
 int main(int argc, char** argv) {
     struct sockaddr_un addr;
-    char buf[100];
+    char buf[10000];
     int fd,cl,rc;
 
     if ( (fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
@@ -76,6 +77,7 @@ int main(int argc, char** argv) {
     }
 
     while (1) {
+        printf("aaaaa");
         if ( (cl = accept(fd, NULL, NULL)) == -1) {
             perror("[datagen] Error accepting incomming connection.\n");
             continue;
