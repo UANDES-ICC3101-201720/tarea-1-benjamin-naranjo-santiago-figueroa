@@ -66,10 +66,13 @@ int main(int argc, char** argv) {
       }
     printf("E flag: %s T flag: %s and P flag: %s\n", Eflg, Tflg, Pflg);
     T = atoi(Tflg);
+
     /* TODO: start datagen here as a child process. */
     struct sockaddr_un addr;
     int fd, rc;
     char buf[1000];
+    unsigned int num;
+    unsigned int[pow(10, T)];
 
     if ( (fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
     perror("socket error");
@@ -84,6 +87,18 @@ int main(int argc, char** argv) {
     if (write(fd, buf, rc) != rc) {
       if (rc > 0) fprintf(stderr,"partial write");
       else {
+        perror("write error");
+        exit(-1);
+      }
+    }
+
+    //leer desde el socket
+    while ( ( rc=read(STIND_FILENO, buf, sizeof(buf)))> 0){
+      if(write(fd, buf, rc) != rc){
+        //escribir los datos que me esta mandando el socket
+
+      }
+      else{
         perror("write error");
         exit(-1);
       }
