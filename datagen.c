@@ -52,7 +52,7 @@ UINT* generate_values(UINT T, bool sorted) {
 
 int main(int argc, char** argv) {
     struct sockaddr_un addr;
-    char buf[10000];
+    char buf[1000];
     int fd,cl,rc;
 
     if ( (fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
@@ -77,7 +77,6 @@ int main(int argc, char** argv) {
     }
 
     while (1) {
-        printf("aaaaa");
         if ( (cl = accept(fd, NULL, NULL)) == -1) {
             perror("[datagen] Error accepting incomming connection.\n");
             continue;
