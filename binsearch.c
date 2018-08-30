@@ -52,10 +52,10 @@ int partition(int arr[], int lo, int hi){
       arr[j] = aux;
       i++;
     }
-  aux = arr[i];
-  arr[i] = arr[hi];
-  arr[j] = aux;
-}
+    aux = arr[i];
+    arr[i] = arr[hi];
+    arr[j] = aux;
+  }
   return i;
 }
 
@@ -88,6 +88,7 @@ int main(int argc, char** argv) {
       }
     printf("E flag: %s T flag: %s and P flag: %s\n", Eflg, Tflg, Pflg);
     /* TODO: start datagen here as a child process. */
+
 
     /* TODO: implement code for your experiments using data provided by datagen and your
      * serial and parallel versions of binsearch.
