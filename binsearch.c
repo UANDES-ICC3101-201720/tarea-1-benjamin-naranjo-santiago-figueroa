@@ -67,15 +67,21 @@ int main(int argc, char** argv) {
     printf("E flag: %s T flag: %s and P flag: %s\n", Eflg, Tflg, Pflg);
     T = atoi(Tflg);
     /* TODO: start datagen here as a child process. */
+    struct sockaddr_un addr;
     int fd, rc;
-    int buf = pow(10, T);
+    char buf[1000];
 
     if ( (fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
     perror("socket error");
     exit(-1);
     }
 
-    if (write(fd, &buf, rc) != rc) {
+    if(connect(fd, (struct sockaddr*)&addr, sizeof(addr))== -1){
+      perror("connect error");
+      exit(-1);
+    }
+
+    if (write(fd, buf, rc) != rc) {
       if (rc > 0) fprintf(stderr,"partial write");
       else {
         perror("write error");
