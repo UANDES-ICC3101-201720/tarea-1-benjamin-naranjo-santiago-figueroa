@@ -34,33 +34,10 @@ int parallel_binsearch() {
 
     return 0;
 }
-void quicksort(int arr[],int lo, int hi){
-  if (lo < hi){
-    int p = partition(arr, lo, hi);
-    quicksort(arr, lo, p-1);
-    quicksort(arr, p+1, hi);
-  }
-}
-int partition(int arr[], int lo, int hi){
-  int pivot = arr[hi];
-  int i = lo;
-  int aux;
-  for(int j=lo; j < hi; j++){
-    if (arr[j] < pivot){
-      aux = arr[i];
-      arr[i] = arr[j];
-      arr[j] = aux;
-      i++;
-    }
-    aux = arr[i];
-    arr[i] = arr[hi];
-    arr[j] = aux;
-  }
-  return i;
-}
 
 
 int main(int argc, char** argv) {
+
     /* TODO: move this time measurement to right before the execution of each binsearch algorithms
      * in your experiment code. It now stands here just for demonstrating time measurement. */
     clock_t cbegin = clock();
