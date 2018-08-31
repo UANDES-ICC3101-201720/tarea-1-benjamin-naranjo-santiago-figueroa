@@ -11,6 +11,8 @@
 #include "const.h"
 #include "util.h"
 
+#include <pthread.h>
+
 int partition(int arr[], int lo, int hi);
 
 int serial_binsearch(int x, int val[], int n) {
@@ -37,7 +39,7 @@ int parallel_binsearch() {
 
 
 int main(int argc, char** argv) {
-
+    pthread_t thid;
     /* TODO: move this time measurement to right before the execution of each binsearch algorithms
      * in your experiment code. It now stands here just for demonstrating time measurement. */
     clock_t cbegin = clock();
@@ -68,11 +70,15 @@ int main(int argc, char** argv) {
     T = atoi(Tflg);
 
     /* TODO: start datagen here as a child process. */
+    if (pthread_create(&thid, NULL, thread, "thread 1") != 0){
+      perror("pthread_create() error");
+      exit(1);
+    }
     struct sockaddr_un addr;
     int fd, rc;
     char buf[1000];
     unsigned int num;
-    unsigned int[pow(10, T)];
+    unsigned int power = pow(10, T);
 
     if ( (fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
     perror("socket error");
@@ -93,7 +99,7 @@ int main(int argc, char** argv) {
     }
 
     //leer desde el socket
-    while ( ( rc=read(STIND_FILENO, buf, sizeof(buf)))> 0){
+    while ( ( rc=read(STDIN_FILENO, buf, sizeof(buf)))> 0){
       if(write(fd, buf, rc) != rc){
         //escribir los datos que me esta mandando el socket
 
