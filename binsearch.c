@@ -70,10 +70,6 @@ int main(int argc, char** argv) {
     T = atoi(Tflg);
 
     /* TODO: start datagen here as a child process. */
-    if (pthread_create(&thid, NULL, thread, "thread 1") != 0){
-      perror("pthread_create() error");
-      exit(1);
-    }
     struct sockaddr_un addr;
     int fd, rc;
     char buf[1000];
@@ -85,7 +81,7 @@ int main(int argc, char** argv) {
     exit(-1);
     }
 
-    if(connect(fd, (struct sockaddr*)&addr, sizeof(addr))== -1){
+    if(connect(*addr, 0, sizeof(addr))== -1){
       perror("connect error");
       exit(-1);
     }
@@ -109,7 +105,6 @@ int main(int argc, char** argv) {
         exit(-1);
       }
     }
-
     /* TODO: implement code for your experiments using data provided by datagen and your
      * serial and parallel versions of binsearch.
      * */
