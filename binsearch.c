@@ -187,7 +187,7 @@ int main(int argc, char** argv) {
      * serial and parallel versions of binsearch.
      * */
 
-    fprintf(stderr, "Acaaaaa\n");//aaaaaaaaaaaaaaaaaaaaaa
+    fprintf(stderr, "Aca1\n");//aaaaaaaaaaaaaaaaaaaaaa
     /* TODO: connect to datagen and ask for the necessary data in each experiment round.
      * Create a Unix domain socket with DSOCKET_PATH (see const.h).
      * Talk to datagen using the messages specified in the assignment description document.
