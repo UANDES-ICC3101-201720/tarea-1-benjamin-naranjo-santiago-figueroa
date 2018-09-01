@@ -30,7 +30,7 @@ int size;
 
 typedef struct{
   unsigned int *arr;
-  int l, r ,x;
+  int l, h ,x;
 }data;
 
 int serial_binsearch(int x, int val[], int n) {
@@ -57,7 +57,7 @@ int *binsearch(void *args) {
   int high;
   int x;
   x = info->x;
-  low = info->low;
+  low = info->l;
   job_waiting++;
   finish = 0;
   while(low < high && !found){
