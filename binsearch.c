@@ -14,6 +14,20 @@
 #include <limits.h>
 #include <pthread.h>
 
+int finish;
+int arr[];
+bool fnd = false;
+int found;
+int job_waiting = 0;
+int max;
+int min;
+int xx;
+int n = sizeof (arr);
+int max_threads;
+int c = 0;
+int position;
+int size;
+
 typedef struct{
   unsigned int *arr;
   int l, r ,x;
