@@ -112,7 +112,7 @@ int main(int argc, char** argv) {
     
     //leer desde el socket
     int largo = pow(10, T);
-    int data = 
+    int data[largo];
 
     /* TODO: implement code for your experiments using data provided by datagen and your
      * serial and parallel versions of binsearch.
