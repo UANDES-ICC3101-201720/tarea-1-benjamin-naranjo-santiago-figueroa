@@ -50,7 +50,10 @@ UINT* generate_values(UINT T, bool sorted) {
     return valuebuff;
 }
 
+char *socket_path = "/tmp/dg.sock";
+
 int main(int argc, char** argv) {
+    fprintf(stderr,"saludos desde datagen, qls\n");// borrar
     struct sockaddr_un addr;
     char buf[1000];
     int fd,cl,rc;
@@ -77,12 +80,15 @@ int main(int argc, char** argv) {
     }
 
     while (1) {
+        fprintf(stderr, "Soy mr Datageneratronix, y hago un while(true)\n");// borrar
         if ( (cl = accept(fd, NULL, NULL)) == -1) {
             perror("[datagen] Error accepting incomming connection.\n");
+            fprintf(stderr, "perdon, soy wn\n");
             continue;
         }
-
+        fprintf(stderr, "cl: %d, buf: %s\n", cl, buf);
         while ( (rc=read(cl,buf,sizeof(buf))) > 0) {
+            fprintf(stderr, "Te presento mi segundo while, wn\n");
             char cmd[6], sflag;
             int tvalue;
             int toks = sscanf(buf, DATAGEN_BEGIN_CMD_FMT, cmd, &sflag, &tvalue);

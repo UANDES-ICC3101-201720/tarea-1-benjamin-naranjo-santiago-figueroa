@@ -3,6 +3,7 @@
 #include <math.h>
 #include <unistd.h>
 #include <sys/socket.h>
+#include <sys/wait.h>  /* for wait */
 #include <sys/un.h>
 #include <stdbool.h>
 #include <string.h>
@@ -37,7 +38,6 @@ int parallel_binsearch() {
     return 0;
 }
 
-
 int main(int argc, char** argv) {
     pthread_t thid;
     /* TODO: move this time measurement to right before the execution of each binsearch algorithms
@@ -57,54 +57,54 @@ int main(int argc, char** argv) {
     while ((c = getopt (argc, argv, "T:E:P:")) != -1)
       switch (c){
         case 'E':
-          Eflg = optarg;
-          break;
+			Eflg = optarg;
+			break;
         case 'P':
-          Pflg = optarg;
-          break;
+			Pflg = optarg;
+			break;
         case 'T':
-          Tflg = optarg;
-          break;
-      }
+			Tflg = optarg;
+			break;
+    }
     printf("E flag: %s T flag: %s and P flag: %s\n", Eflg, Tflg, Pflg);
     T = atoi(Tflg);
 
     /* TODO: start datagen here as a child process. */
-    struct sockaddr_un addr;
-    int fd, rc;
-    char buf[1000];
-    unsigned int num;
-    unsigned int power = pow(10, T);
+	pid_t pid=fork();
+    char* datagen_file[] = {"./datagen", NULL};
 
-    if ( (fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
-    perror("socket error");
-    exit(-1);
+    if (pid < 0) {
+      perror("Fork status");
+      return(-1);
     }
 
-    if(connect(*addr, 0, sizeof(addr))== -1){
-      perror("connect error");
+    if (pid==0) { /* child process */
+        fprintf(stderr,"Datagen son %d of binsearch.", getpid());
+        execvp(datagen_file[0], datagen_file);
+    }
+
+    struct sockaddr_un addr;
+    char buf[1000];
+    int fd,rc;
+    
+    if ( (fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
+      perror("socket error");
       exit(-1);
     }
 
-    if (write(fd, buf, rc) != rc) {
-      if (rc > 0) fprintf(stderr,"partial write");
-      else {
-        perror("write error");
-        exit(-1);
-      }
+    memset(&addr, 0, sizeof(addr));
+    addr.sun_family = AF_UNIX;
+    strncpy(addr.sun_path, DSOCKET_PATH, sizeof(addr.sun_path)-1);
+    
+    if (connect(fd, (struct sockaddr*)&addr, sizeof(addr)) == -1) {
+      perror("bind error");
+      exit(-1);
     }
 
+    
     //leer desde el socket
-    while ( ( rc=read(STDIN_FILENO, buf, sizeof(buf)))> 0){
-      if(write(fd, buf, rc) != rc){
-        //escribir los datos que me esta mandando el socket
-
-      }
-      else{
-        perror("write error");
-        exit(-1);
-      }
-    }
+    // PRUEBA CON SOCKET
+    
     /* TODO: implement code for your experiments using data provided by datagen and your
      * serial and parallel versions of binsearch.
      * */
@@ -116,6 +116,11 @@ int main(int argc, char** argv) {
      * experiments
      * */
     //read();
+
+    if (listen(fd, 5) == -1) {
+      perror("listen error");
+      exit(-1);
+    }
 
     /* Probe time elapsed. */
     clock_t cend = clock();
