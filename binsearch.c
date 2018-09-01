@@ -50,7 +50,7 @@ int serial_binsearch(int x, int val[], int n) {
 }
 
 // TODO: implement
-int parallel_binsearch() {
+int *binsearch(void *args) {
   data *info = args;
   int low;
   int mid;
@@ -70,6 +70,26 @@ int parallel_binsearch() {
     }
   }
   return 0;
+}
+void parallel_binsearch(unsigned int arr[], int l, int h, int x){
+  pthread_t threads[max_threads];
+  int thread_p = h / max_threads;
+  int counter = 1;
+
+  for(int i = 0; i < max_threads; i++){
+    data *info = malloc(sizeof(data));
+    info->arr = arr;
+    info->l = l;
+    info->x = position;
+    info->h = (c_parts * mult) - 1;
+    if (pthread_create(&m_tid[i], NULL, (void *)binsearch, info))
+    {
+        free(info);
+    }
+    l = c_parts * mult;
+    mult++;
+  }
+
 }
 
 int main(int argc, char** argv) {
