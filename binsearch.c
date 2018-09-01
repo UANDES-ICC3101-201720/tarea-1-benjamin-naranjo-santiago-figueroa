@@ -15,7 +15,7 @@
 #include <pthread.h>
 
 int finish;
-int arr[];
+int arr[10];
 bool fnd = false;
 int found;
 int job_waiting = 0;
