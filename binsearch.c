@@ -33,7 +33,7 @@ typedef struct{
   int l, h ,x;
 }data;
 
-int serial_binsearch(int x, int val[], int n) {
+int serial_binsearch(unsigned int val[], int x, int n) {
     int low = 0, high = n-1, mid;
 
     while (low < high){
@@ -44,7 +44,7 @@ int serial_binsearch(int x, int val[], int n) {
         else if (x > val[mid])
             low = mid + 1;
         else
-            return mid;
+            return mid; 
     }
     return -1;
 }
@@ -139,7 +139,7 @@ int main(int argc, char** argv) {
     }
     /*BUFFERS*/
     char buf[15];
-    int data_buf[1000];
+    unsigned int data_buf[1000];
 
     struct sockaddr_un addr;
     int fd,rc;
@@ -184,7 +184,7 @@ int main(int argc, char** argv) {
         }
         token++;
     }
-    
+
     /* TODO: implement code for your experiments using data provided by datagen and your
      * serial and parallel versions of binsearch.
      * */
@@ -192,16 +192,16 @@ int main(int argc, char** argv) {
     struct timespec start, finish;
 	double elapsed1 = 0;
 	double elapsed2 = 0;
-
+    int cantidad_valores = pow(10, T);
     for (i=0; i < E; i++){
         clock_gettime(CLOCK_MONOTONIC, &start);
-		serial_binsearch(data,largo, data[P]);
+		serial_binsearch(data_buf, P, pow(10,T));
 		clock_gettime(CLOCK_MONOTONIC, &finish);
 		elapsed1 = (finish.tv_sec - start.tv_sec);
 		elapsed1 += (finish.tv_nsec - start.tv_nsec) / 1000000.0;
 
 		clock_gettime(CLOCK_MONOTONIC, &start);
-		parallel_binsearch(data, largo, P);
+		parallel_binsearch(data_buf, 0, cantidad_valores, P);
 		clock_gettime(CLOCK_MONOTONIC, &finish);
 		elapsed2 = (finish.tv_sec - start.tv_sec);
 		elapsed2 += (finish.tv_nsec - start.tv_nsec) / 1000000.0;
