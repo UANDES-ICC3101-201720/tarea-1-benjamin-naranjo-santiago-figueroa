@@ -14,7 +14,10 @@
 #include <limits.h>
 #include <pthread.h>
 
-int partition(int arr[], int lo, int hi);
+typedef struct{
+  unsigned int *arr;
+  int l, r ,x;
+}data;
 
 int serial_binsearch(int x, int val[], int n) {
     int low = 0, high = n-1, mid;
@@ -34,8 +37,25 @@ int serial_binsearch(int x, int val[], int n) {
 
 // TODO: implement
 int parallel_binsearch() {
-
-    return 0;
+  data *info = args;
+  int low;
+  int mid;
+  int high;
+  int x
+  x = info->x;
+  low = info->1;
+  job_waiting++;
+  finish = 0;
+  while(low < high && !found){
+    mid = (low + high) /2;
+    if(x < mid)(high = mid - 1);
+    else if (x > mid)(low = mid + 1);
+    else{
+      finish = 1;
+      pthread_exit(0);
+    }
+  }
+  return 0;
 }
 
 int main(int argc, char** argv) {
@@ -90,7 +110,7 @@ int main(int argc, char** argv) {
     int fd,rc;
     strcpy(buf, "BEGIN S");
     strcat(buf, T);
-    
+
     if ( (fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
       perror("socket error");
       exit(-1);
@@ -109,10 +129,10 @@ int main(int argc, char** argv) {
         perror("write error\n");
         exit(-1);
     }
-    
+
     //leer desde el socket
     int largo = pow(10, T);
-    int data[largo];
+    int data =
 
     /* TODO: implement code for your experiments using data provided by datagen and your
      * serial and parallel versions of binsearch.
@@ -125,7 +145,7 @@ int main(int argc, char** argv) {
      * experiments
      * */
 
-     
+
     //read();
 
     long unsigned int values = 0;
