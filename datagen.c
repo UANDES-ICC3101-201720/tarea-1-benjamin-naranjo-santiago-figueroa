@@ -51,7 +51,7 @@ UINT* generate_values(UINT T, bool sorted) {
 
 int main(int argc, char** argv) {
     struct sockaddr_un addr;
-    char buf[1000];
+    char data_buf[1000];
     int fd,cl,rc;
 
     if ( (fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
@@ -80,11 +80,11 @@ int main(int argc, char** argv) {
             perror("[datagen] Error accepting incomming connection.\n");
             continue;
         }
-        fprintf(stderr, "cl: %d, buf: %s\n", cl, buf);
-        while ( (rc=read(cl,buf,sizeof(buf))) > 0) {
+        fprintf(stderr, "cl: %d, buf: %s\n", cl, data_buf);
+        while ( (rc=read(cl,data_buf,sizeof(data_buf))) > 0) {
             char cmd[6], sflag;
             int tvalue;
-            int toks = sscanf(buf, DATAGEN_BEGIN_CMD_FMT, cmd, &sflag, &tvalue);
+            int toks = sscanf(data_buf, DATAGEN_BEGIN_CMD_FMT, cmd, &sflag, &tvalue);
 
             if (toks == 3 && strstr(cmd, "BEGIN") != NULL) {
                 printf("[datagen] Beginning value generation.\n");
