@@ -41,7 +41,7 @@ int parallel_binsearch() {
   int low;
   int mid;
   int high;
-  int x
+  int x;
   x = info->x;
   low = info->1;
   job_waiting++;
@@ -60,7 +60,6 @@ int parallel_binsearch() {
 
 int main(int argc, char** argv) {
     pthread_t thid;
-    fprintf(stderr, "Acaaaaa\n");//aaaaaaaaaaaaaaaaaaaaaa
     /* TODO: move this time measurement to right before the execution of each binsearch algorithms
      * in your experiment code. It now stands here just for demonstrating time measurement. */
     clock_t cbegin = clock();
@@ -103,15 +102,13 @@ int main(int argc, char** argv) {
         execlp("./datagen", "./datagen", NULL);
     }
     /*BUFFERS*/
-    char buf[10];
+    char buf[15];
     int data_buf[1000];
 
     struct sockaddr_un addr;
     int fd,rc;
     strcpy(buf, "BEGIN S");
-    char n;
-    fprintf(n, T);
-    strcat(buf, n);
+    strcat(buf, Tflg);
 
     if ( (fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
       perror("socket error");
@@ -134,12 +131,13 @@ int main(int argc, char** argv) {
 
     //leer desde el socket
     int largo = pow(10, T);
-    int data =
+    int data = 0;
 
     /* TODO: implement code for your experiments using data provided by datagen and your
      * serial and parallel versions of binsearch.
      * */
 
+    fprintf(stderr, "Acaaaaa\n");//aaaaaaaaaaaaaaaaaaaaaa
     /* TODO: connect to datagen and ask for the necessary data in each experiment round.
      * Create a Unix domain socket with DSOCKET_PATH (see const.h).
      * Talk to datagen using the messages specified in the assignment description document.
@@ -150,7 +148,7 @@ int main(int argc, char** argv) {
 
     //read();
 
-    long unsigned int values = 0;
+    unsigned long int values = 0;
     size_t numval = pow(10, T);
     size_t reader = 0;
 
