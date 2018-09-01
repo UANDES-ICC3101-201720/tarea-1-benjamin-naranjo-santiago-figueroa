@@ -40,6 +40,7 @@ int parallel_binsearch() {
 
 int main(int argc, char** argv) {
     pthread_t thid;
+    fprintf(stderr, "Acaaaaa\n");//aaaaaaaaaaaaaaaaaaaaaa
     /* TODO: move this time measurement to right before the execution of each binsearch algorithms
      * in your experiment code. It now stands here just for demonstrating time measurement. */
     clock_t cbegin = clock();
@@ -52,8 +53,7 @@ int main(int argc, char** argv) {
 
     /* TODO: parse arguments with getopt */
     char *Pflg, *Eflg, *Tflg;
-    int T;
-    int c;
+    int T, c;
     while ((c = getopt (argc, argv, "T:E:P:")) != -1)
       switch (c){
         case 'E':
@@ -89,7 +89,9 @@ int main(int argc, char** argv) {
     struct sockaddr_un addr;
     int fd,rc;
     strcpy(buf, "BEGIN S");
-    strcat(buf, T);
+    char n;
+    fprintf(n, T);
+    strcat(buf, n);
     
     if ( (fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
       perror("socket error");
