@@ -127,7 +127,6 @@ int main(int argc, char** argv) {
     /* TODO: start datagen here as a child process. */
 	pid_t pid;
     pid =fork();
-    char* datagen_file[] = {"./datagen", NULL};
 
     if (pid < 0) {
       perror("Fork status");
