@@ -167,19 +167,17 @@ int main(int argc, char** argv) {
 
     //leer desde el socket
     int token = 0;
-    int largo = pow(10, T);
-    int data[largo];
     int i;
 
     while((rc = read(fd, data_buf, sizeof(data_buf))) >= 1000){
         if (token == 0){
             for (i = 0; i < 1000; i++){
-                data[i + token*1000] = data_buf[i + 1];
+                data_buf[i + token*1000] = data_buf[i + 1];
             }
         }
         if (token > 0){
             for (i = 0; i < 1000; i++){
-                data[i + token*1000] = data_buf[i];
+                data_buf[i + token*1000] = data_buf[i];
             }
         }
         token++;
