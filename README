@@ -19,22 +19,33 @@ Repite el proceso.
     }
     return -1;
 }
+El algoritmo paralelo divide el arreglo dependiendo de la cantidad de nucleos que se tiene.
+Luego se utiliza la misma cantidad de threads que los nucleos y se le entrega mediante threads los arreglos a cada uno.
 
-El algoritmo de búsqueda paralelo funciona de la siguiente manera:
-Se le asigna a la función el arreglo, el valor mayor y el valor menor
-Luego, la función irá hacia la mitad del arreglo entregado y dividirá en “X” este arreglo en donde X es la cantidad de núcleos que tiene mi computadora;
-esos X arreglos asignándoselos a X nuevas variables y luego liberando el espacio de memoria del arreglo anterior; todo esto se correrá solamente una vez, luego la cantidad de arreglos serán solamente 2.
-Se crearán 2 threads en donde se le pasen esos 2 arreglos y corre de nuevo la función. Como solamente uno de esos arreglos funciona se “matan” los threads en el que solo quede un numero y este no sea el numero buscado.
+parallel_binsearch(unsigned int arr[], int l, int h, int x){
+  pthread_t threads[max_threads];
+  int thread_p = h / max_threads;
+  int counter = 1;
 
-[Llamada a al función (arreglo, mayor valor, valor menor)]-->/¿El numero se encuentra a la mitad?\ SI-->(Retornar el numero)
-                                                                                                   NO-->/¿Es el tamaño de mi arreglo mayor a 1?\NO-->("Matar" al thread)
-                                                                                                                                                SI-->/¿Es la primera vez que se corre el código?\SI-->[Dividir el arreglo en X mitades]-->[Asignar los arreglos a X nuevas variables]-->[Liberar espacio de memoria del arreglo anterior]-->[Crear 2 threads y a cada uno asignarle los arreglos]--->{Llamada a la funcion}
-                                                                                                                                                                                                 NO-->[Dividir el arreglo en 2 mitades]-->[Asignar los arreglos a 2 nuevas variables]------^
+  for(int i = 0; i < max_threads; i++){
+    data *info = malloc(sizeof(data));
+    info->arr = arr;
+    info->l = l;
+    info->x = position;
+    info->h = (thread_p * mult) - 1;
+    if (pthread_create(&m_tid[i], NULL, (void *)binsearch, info))
+    {
+        free(info);
+    }
+    l = thread_p * counter;
+    counter+1;
+  }
 
 
 *Analisis de Resultados:
 
 *Conclusiones:
+El paralelismo puede dividir el problema en procesos más pequeños, sin embargo no siempre puede ser la mejor opcion ya que puede colapsar el sistema.
 
 
 *Problemas encontrados y limitaciones:
@@ -42,4 +53,4 @@ Se crearán 2 threads en donde se le pasen esos 2 arreglos y corre de nuevo la f
 Se encontraron algunos problemas en el programa desde el comienzo.
 Primero, el programa no compilaba si es que no se ejecutaba el flag -lm. Por otro lado, había problemas con el clock ya que este funcionaba de manera distinta a como nosotros lo requeríamos. Este al empezar un nuevo proceso, si es que se estaban ejecutando distintos programas exteriores a mi espacio de trabajo, interferían en la medición de los resultados.
 Segundo, se tuvieron problemas con la implementación de los sockets. Los cuales solamente el programa datasearch.c lo tenía bien implementado para su lectura y escritura, en cambio, para binsearch.c en donde uno debía encargarse de la implementación del socket se obtenían ciertos problemas.
-Tercero, una limitación importante es cuando se le ingresaba un valor de T muy grande, ya que la búsqueda en paralelo se sobrecargaba con demasiados threads y esto podía producir problemas dependiendo del procesador que se tenía.
+Tercero, una limitación importante es cuando se le ingresaba un valor de T muy grande (6), ya que la búsqueda en paralelo se sobrecargaba con demasiados threads y esto podía producir problemas dependiendo del procesador que se tenía.
