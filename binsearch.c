@@ -57,7 +57,7 @@ int *binsearch(void *args) {
   int high;
   int x;
   x = info->x;
-  low = info->1;
+  low = info->low;
   job_waiting++;
   finish = 0;
   while(low < high && !found){
