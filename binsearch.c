@@ -44,7 +44,7 @@ int serial_binsearch(unsigned int val[], int x, int n) {
         else if (x > val[mid])
             low = mid + 1;
         else
-            return mid; 
+            return mid;
     }
     return -1;
 }
@@ -155,14 +155,12 @@ int main(int argc, char** argv) {
     addr.sun_family = AF_UNIX;
     strncpy(addr.sun_path, DSOCKET_PATH, sizeof(addr.sun_path)-1);
 
-    if (connect(fd, (struct sockaddr*)&addr, sizeof(addr)) == -1) {
-      perror("connect error");
-      exit(-1);
+    while ( connect(fd, (struct sockaddr*)&addr, sizeof(addr)) == -1){
+        perror("[binsearch] connect error");
     }
 
-    if ((rc = write(fd, buf, sizeof(buf)))==-1){
-        perror("write error\n");
-        exit(-1);
+    if ( connect(fd, (struct sockaddr*)&addr, sizeof(addr)) != -1){
+        printf("[binsearch] connected");
     }
 
     //leer desde el socket
@@ -203,7 +201,7 @@ int main(int argc, char** argv) {
 		clock_gettime(CLOCK_MONOTONIC, &finish);
 		elapsed2 = (finish.tv_sec - start.tv_sec);
 		elapsed2 += (finish.tv_nsec - start.tv_nsec) / 1000000.0;
-		printf("%d %d %lf %lf\n", i, T, elapsed1, elapsed2);	
+		printf("%d %d %lf %lf\n", i, T, elapsed1, elapsed2);
 	}
 
     /* TODO: connect to datagen and ask for the necessary data in each experiment round.
