@@ -81,12 +81,12 @@ void parallel_binsearch(unsigned int arr[], int l, int h, int x){
     info->arr = arr;
     info->l = l;
     info->x = position;
-    info->h = (c_parts * mult) - 1;
+    info->h = (thread_p * mult) - 1;
     if (pthread_create(&m_tid[i], NULL, (void *)binsearch, info))
     {
         free(info);
     }
-    l = c_parts * mult;
+    l = thread_p * mult;
     mult++;
   }
 
