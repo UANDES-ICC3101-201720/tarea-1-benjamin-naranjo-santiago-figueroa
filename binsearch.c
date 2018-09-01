@@ -11,7 +11,7 @@
 #include "types.h"
 #include "const.h"
 #include "util.h"
-
+#include <limits.h>
 #include <pthread.h>
 
 int partition(int arr[], int lo, int hi);
@@ -70,7 +70,8 @@ int main(int argc, char** argv) {
     T = atoi(Tflg);
 
     /* TODO: start datagen here as a child process. */
-	pid_t pid=fork();
+	pid_t pid;
+    pid =fork();
     char* datagen_file[] = {"./datagen", NULL};
 
     if (pid < 0) {
@@ -79,13 +80,16 @@ int main(int argc, char** argv) {
     }
 
     if (pid==0) { /* child process */
-        fprintf(stderr,"Datagen son %d of binsearch.", getpid());
-        execvp(datagen_file[0], datagen_file);
+        execlp("./datagen", "./datagen", NULL);
     }
+    /*BUFFERS*/
+    char buf[10];
+    int data_buf[1000];
 
     struct sockaddr_un addr;
-    char buf[1000];
     int fd,rc;
+    strcpy(buf, "BEGIN S");
+    strcat(buf, T);
     
     if ( (fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
       perror("socket error");
@@ -97,14 +101,19 @@ int main(int argc, char** argv) {
     strncpy(addr.sun_path, DSOCKET_PATH, sizeof(addr.sun_path)-1);
     
     if (connect(fd, (struct sockaddr*)&addr, sizeof(addr)) == -1) {
-      perror("bind error");
+      perror("connect error");
       exit(-1);
     }
 
+    if ((rc = write(fd, buf, sizeof(buf)))==-1){
+        perror("write error\n");
+        exit(-1);
+    }
     
     //leer desde el socket
-    // PRUEBA CON SOCKET
-    
+    int largo = pow(10, T);
+    int data = 
+
     /* TODO: implement code for your experiments using data provided by datagen and your
      * serial and parallel versions of binsearch.
      * */
