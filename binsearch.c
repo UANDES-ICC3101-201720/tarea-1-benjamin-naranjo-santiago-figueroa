@@ -30,7 +30,7 @@ int size;
 
 typedef struct{
   unsigned int *arr;
-  int l, r ,x;
+  int l, h ,x;
 }data;
 
 int serial_binsearch(int x, int val[], int n) {
@@ -57,7 +57,7 @@ int *binsearch(void *args) {
   int high;
   int x;
   x = info->x;
-  low = info->low;
+  low = info->l;
   job_waiting++;
   finish = 0;
   while(low < high && !found){
@@ -74,6 +74,7 @@ int *binsearch(void *args) {
 void parallel_binsearch(unsigned int arr[], int l, int h, int x){
   pthread_t threads[max_threads];
   int thread_p = h / max_threads;
+  int mult = 1;
   int counter = 1;
 
   for(int i = 0; i < max_threads; i++){
@@ -82,7 +83,7 @@ void parallel_binsearch(unsigned int arr[], int l, int h, int x){
     info->l = l;
     info->x = position;
     info->h = (thread_p * mult) - 1;
-    if (pthread_create(&m_tid[i], NULL, (void *)binsearch, info))
+    if (pthread_create(&threads[i], NULL, (void *)binsearch, info))
     {
         free(info);
     }
@@ -106,7 +107,7 @@ int main(int argc, char** argv) {
 
     /* TODO: parse arguments with getopt */
     char *Pflg, *Eflg, *Tflg;
-    int T, c;
+    int T, E, P, c;
     while ((c = getopt (argc, argv, "T:E:P:")) != -1)
       switch (c){
         case 'E':
@@ -121,6 +122,8 @@ int main(int argc, char** argv) {
     }
     printf("E flag: %s T flag: %s and P flag: %s\n", Eflg, Tflg, Pflg);
     T = atoi(Tflg);
+    E = atoi(Eflg);
+    P = atoi(Pflg);
 
     /* TODO: start datagen here as a child process. */
 	pid_t pid;
@@ -183,9 +186,29 @@ int main(int argc, char** argv) {
         token++;
     }
 
+    clock_t cbegin = clock();
     /* TODO: implement code for your experiments using data provided by datagen and your
      * serial and parallel versions of binsearch.
      * */
+
+    struct timespec start, finish;
+	double elapsed1 = 0;
+	double elapsed2 = 0;
+
+    for (i=0; i < E; i++){
+        clock_gettime(CLOCK_MONOTONIC, &start);
+		serial_binsearch(data,largo, data[P]);
+		clock_gettime(CLOCK_MONOTONIC, &finish);
+		elapsed1 = (finish.tv_sec - start.tv_sec);
+		elapsed1 += (finish.tv_nsec - start.tv_nsec) / 1000000.0;
+
+		clock_gettime(CLOCK_MONOTONIC, &start);
+		parallel_binsearch(data, largo, P);
+		clock_gettime(CLOCK_MONOTONIC, &finish);
+		elapsed2 = (finish.tv_sec - start.tv_sec);
+		elapsed2 += (finish.tv_nsec - start.tv_nsec) / 1000000.0;
+		printf("%d %d %lf %lf\n", i, T, elapsed1, elapsed2);	
+	}
 
     fprintf(stderr, "Aca1\n");//aaaaaaaaaaaaaaaaaaaaaa
     /* TODO: connect to datagen and ask for the necessary data in each experiment round.
@@ -197,21 +220,6 @@ int main(int argc, char** argv) {
 
 
     //read();
-
-    unsigned long int values = 0;
-    size_t numval = pow(10, T);
-    size_t reader = 0;
-
-    UINT*nums = malloc(sizeof(UINT) * numval);
-    while(reader < numval){
-      reader = read(fd, numval + reader, sizeof(UINT)*1000);
-      reader += reader / 4;
-    }
-
-    if (listen(fd, 5) == -1) {
-      perror("listen error");
-      exit(-1);
-    }
 
     /* Probe time elapsed. */
     clock_t cend = clock();
